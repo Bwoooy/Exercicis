@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+	table, td, th {
+		border-collapse: collapse;
+		border: 1px solid black;
+	}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+var i = 200;
+var link = "https://www.pokeapi.co/api/v2/pokemon/";
+function get() {
+	$.get(link +  i + "/", function( data ) {
+		$(".id").html(data.id);
+		$(".ns").attr("src", data.sprites.front_default);
+		$(".ss").attr("src", data.sprites.back_default);
+		$(".n").html(data.name);
+		$(".t").html(data.types[0].type.name);
+  	});
+ }
+
+$(document).ready(function(){
+	get();
+
+	$("#prev").on("click",function(){
+		i-=1;
+		get();
+	});
+	$("#next").on("click",function(){
+    	++i;
+    	get();
+    	console.log(i);
+	});
+	$("#search").on("click",function(){
+    	i = document.getElementById("number").value;
+    	
+    	get();
+	});
+	
+});
+
+
+</script>
+</head>
+
+
+<body>
+
+<table>
+	<tr>
+		<th>ID</th>
+		<th colspan="3">Normal Sprite</th>
+		<th colspan="3">Skinny sprite</th>
+		<th>Name</th>
+		<th>Type</th>
+	</tr>
+	<tr style="height: 100px;">
+		<td class = "id" >p.id</td>
+		<td colspan="3"><img class = "ns" alt = ":'("></td>
+		<td colspan="3"><img class = "ss" alt = ":'("></td>
+		<td class = "n">Name</td>
+		<td class = "t">Type</td>
+	</tr>
+</table>
+
+<button id = "prev">Previous</button>
+<textarea id = "number"></textarea>
+<button id = "search">Search</button>
+<button id = "next">Next</button>
+
+</body>
+</html>
